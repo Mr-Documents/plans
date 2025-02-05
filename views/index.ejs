@@ -1,0 +1,79 @@
+<%- include('partials/header.ejs'); -%>
+
+<section class="homepage" style="margin-bottom: -25%;">
+  <div class="menu-container">
+    <div class="menu-toggle" id="menu-toggle">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </div>
+    <nav>
+        <img id="imglogo" src="/assets/icons/White_pencil.png" width="60px" height="60px">
+        <div class="navlinks">
+            <ul>
+                
+                
+            </ul>
+        </div>
+    </nav>
+    <div class="textcontent">
+    <h1 id="mainh1">
+        Welcome To <span style="color: rgb(255, 36, 16);">Mytodo</span>
+        <img id="pencilanimate" src="/assets/icons/3334066.png" width="60px" height="60px">
+    </h1>
+    <p id="phome"style="color:rgb(255, 36, 16)"> A place for consistency and great mind, Plan your day and future with mytodo</p>
+    
+
+    </div>
+
+
+
+
+</section> 
+
+
+
+
+<div class="box" id="heading">
+    <h1>
+      <%= lsTitle %>
+    </h1>
+  </div>
+  <div class="box">
+    <% for(let todo of lsItems){%>
+      <div class="item">
+        <form action="/delete" method="post">
+          <input type="checkbox" onchange="this.form.submit()" name="deleteItemId" value="<%= todo.id %>">
+        </form>
+
+        <p id="title<%=todo.id%>">
+          <%= todo.title %>
+        </p>
+
+        <form class="edit" action="/edit" method="post">
+          <input type="hidden" name="updatedItemId" value="<%= todo.id %>">
+          <input id="input<%=todo.id%>" type="text" name="updatedItemTitle" value="<%= todo.title %>" autocomplete="off"
+            autofocus="true" hidden="true" />
+          <button id="done<%=todo.id%>" class="edit" type="submit" hidden><img class="icon"
+              src="/assets/icons/check-solid.svg" alt="tick image"></button>
+        </form>
+        <button id="edit<%=todo.id%>" class="edit" onclick="handler('<%=todo.id%>')"><img class="icon"
+            src="/assets/icons/pencil-solid.svg" alt="pencil image"></button>
+      </div>
+      <% } %>
+
+        <form class="item" action="/add" method="post">
+          <input type="text" name="newItem" placeholder="New Item" autocomplete="off" autofocus="true" />
+          <button class="add" type="submit" name="list" value=<%=lsTitle %> >+</button>
+        </form>
+  </div>
+
+  <script>
+    function handler(id) {
+      document.getElementById("title" + id).setAttribute("hidden", true)
+      document.getElementById("edit" + id).setAttribute("hidden", true)
+      document.getElementById("done" + id).removeAttribute("hidden")
+      document.getElementById("input" + id).removeAttribute("hidden")
+    }
+  </script>
+ 
